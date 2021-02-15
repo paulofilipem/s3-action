@@ -22,21 +22,4 @@ if [ -z "$AWS_REGION" ]; then
   exit 1
 fi
 
-aws configure --profile s3-action <<-EOF > /dev/null 2>&1
-${AWS_ACCESS_KEY_ID}
-${AWS_SECRET_ACCESS_KEY}
-${AWS_REGION}
-text
-EOF
-
-sh -c "aws s3 cp ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET} \
-              --profile s3-action \
-              --no-progress \
-              $*"
-
-aws configure --profile s3-action <<-EOF > /dev/null 2>&1
-null
-null
-null
-text
-EOF
+sh -c "aws s3 cp ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET} $*"
